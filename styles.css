@@ -1,0 +1,277 @@
+body {
+    background-color: #fffcea;
+    color: #00296B;
+    font-family: "Itim";
+    font-weight: -200;
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+
+td {
+    background-color: #EFEFD0;
+    padding: 5px 10px;
+    border: 1px solid #003F88;
+    border-radius: 25px;
+    width: 5px;
+    height: 5px;
+    max-width: 5px;
+    max-height: 5px;
+}
+
+tr {
+    margin: 0;
+    padding: 0;
+}
+
+#wrapper {
+    display: block;
+    margin: auto;
+    padding-top: 20px;
+    width: 690px;
+    height: 250px;
+    z-index: 1;
+}
+
+.label {
+    display: flex;
+    width: 35px;
+    font-size: 15px;
+    text-transform: uppercase;
+    text-decoration: dotted underline;
+    height: 20px;
+    margin-top: -1.8px;
+}
+
+#months {
+    position: fixed;
+    margin-left: -40px;
+    width: 30px;
+    height: 250px;
+}
+
+.tooltip {
+    position: absolute;
+    width: 20px;
+    height: 15px;
+    z-index: 5;
+    margin-left: -10px;
+    margin-top: -8px;
+}
+  
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: rgba(0, 0, 0, 0.424);
+    color: #ffffff;
+    text-align: center;
+    padding: 5px 10px;
+    border-radius: 25px;
+    margin-left: 25px;
+    margin-top: -5px;
+    position: absolute;
+    z-index: 1;
+  }
+  
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+  }
+
+.tooltip:hover {
+    cursor: pointer;
+    width: 20px;
+    height: 15px;
+    border-radius: 25px;
+    background-color: rgba(0, 0, 0, 0.167);
+  }
+
+  #color {
+    width: 50px;
+    height: 50px;
+    margin-top: 15px;
+    margin-left: 95.5%;
+    background-color: #00296B;
+  }
+
+  #color:hover {
+    cursor: pointer;
+  }
+
+  #navi {
+    max-width: 1050px;
+    height: 70px;
+    padding: 5px 10px;
+    margin-left: 30px;
+    margin-bottom: 25px;
+    margin-right: 0px;
+    margin-top: -3px;
+  }
+
+  #title {
+    font-family: "Playwrite CO";
+    text-transform: lowercase;
+    font-size: 50px;
+  }
+
+  .itim-regular {
+    font-family: "Itim", serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+  
+  .playwrite-co {
+    font-family: "Playwrite CO", serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+  }
+  
+  #logo {
+    margin-top: -20px;
+    margin-left: 90px;
+  }
+
+
+  .tab {
+    color: #00296B;
+    background-color: transparent;
+    font-family: inherit;
+    border: 1px solid #00296B;
+    padding: 5px 10px;
+    margin-bottom: 5px;
+    border-bottom: none;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+  }
+
+  .tab:hover {
+    cursor: pointer;
+    background-color: #003f8839;
+  }
+
+  #tracker {
+    display: block;
+  }
+
+  #line-graph {
+    display: none;
+    margin: auto;
+    max-width: 569px;
+    max-height: 450px;
+    z-index: -1;
+  }
+
+  canvas {
+    max-height: 200px;
+    max-width: 600px;
+  }
+  
+  #log {
+    display: none;
+    height: 190px;
+    margin: 0;
+    padding: 5px;
+  }
+
+  #scroll {
+    margin-top: -20px;
+    height: 190px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background-color: none;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #00296B;
+    border-radius: 25px;
+  }
+
+  .setting {
+    font-family: inherit;
+    padding: 1px 12px;
+    background-color: #003F88;
+    color: white;
+    border-radius: 25px;
+    border: none;
+  }
+
+  .setting:hover {
+    cursor: pointer;
+    background-color: #00296B;
+  }
+
+  #dailies, #dailies-description {
+    background-color: transparent;
+    color:#00296b9f;
+    font-family: inherit;
+    border: 1px solid #00296B;
+    padding: 5px 10px;
+    border-radius: 25px;
+  }
+
+  #data-wrapper {
+    display: block;
+    margin: auto;
+    margin-top: 50px;
+    width: 550px;
+    height: 100px;
+  }
+
+  #intro {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 41, 107, 0.812);
+    position: absolute;
+    transform: scaleX(1.1);
+    z-index: 9;
+  }
+
+  #tutorial {   
+    margin: auto;
+    margin-top: 20px;
+    display: block;
+    text-align: center;
+    line-height: 1;
+    width: 600px;
+    height: 450px;
+    background-color:#EFEFD0;
+    padding: 15px 10px;
+    border-radius: 25px;
+    overflow-y: scroll;
+  }
+
+  .calendar-tooltip {
+    position: relative;
+    display: inline-block;
+  }
+
+  .calendar-tooltip .calendar-tt-text::after {
+    content: " ";
+    position: absolute;
+    top: 100%;
+    margin-left: -10px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: rgba(0, 0, 0, 0.424) transparent transparent transparent;
+  }
+  .calendar-tooltip .calendar-tt-text
+  {
+    visibility: hidden;
+    padding: 15px 10px;
+    text-align: center;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.424);
+    width: 150px;
+    height: 130px;
+    bottom: 150%;
+    left: 0%;
+    margin-left: -65px;
+    border-radius: 25px;
+    position: absolute;
+    z-index: 1;
+  }
