@@ -317,7 +317,6 @@ function habitLogData() {
     newLine.style.marginTop = "-30px";
     li.append(removeButton, newLine);
     list.appendChild(li);
-    localStorage.setItem = (latestHabitEntry, list.lastChild);
     removeButton.addEventListener('click', processDeletion);
     if (dataInput < 50) {
         motivate.innerText = "Keep it up! 💪";
@@ -350,13 +349,14 @@ let calendarEdit = document.querySelector(".calendar-tt-text");
 
 function modifyCalendarDate() {
     calendarButtonClicks++;
-    if (calendarButtonClicks === 1) {
+    if (calendarButtonClicks === 1 ) {
 
         calendarEdit.style.visibility = "visible";
     } else if (calendarButtonClicks > 1) {
         calendarButtonClicks = 0;
         calendarEdit.style.visibility = "hidden";
     }
+    console.log(calendarButtonClicks)
 }
 
 let themeChoice;
@@ -374,7 +374,6 @@ colorsMenu.addEventListener('change', function() {
 });
 
 function colorThemes(colorInput) {
-    // remove button color needs to change with theme
     let colorsMenu = document.getElementById("colorThemes");
     let tdCells = document.querySelectorAll("td");
     let logo = document.getElementById("logo").querySelectorAll("path");
