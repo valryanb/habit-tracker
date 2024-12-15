@@ -205,13 +205,20 @@ tr {
     background-color: #00296B;
   }
 
+  input {
+    color:#00296b59;
+  }
+
   #dailies, #dailies-description {
     background-color: transparent;
-    color:#00296b9f;
     font-family: inherit;
     border: 1px solid #00296B;
     padding: 5px 10px;
     border-radius: 25px;
+  }
+
+  #dailies, #dailies-description:focus {
+    color:#0062ff;
   }
 
   #data-wrapper {
@@ -274,4 +281,24 @@ tr {
     border-radius: 25px;
     position: absolute;
     z-index: 1;
+  }
+
+  li {
+    list-style-type: none;
+  }
+
+  #delete {
+    width: 25px;
+    height: 25px;
+    border: none;
+    display: inline-block;
+    color: #0062ff;
+    background-color: transparent;
+    font-weight: 700;
+  }
+
+  #delete:hover {
+    cursor: pointer;
+    color: #00206f;
+
   }

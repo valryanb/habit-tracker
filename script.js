@@ -1,5 +1,8 @@
 dataInput = document.getElementById("dailies").value;
 reasonInput = document.getElementById("dailies-description").value;
+let settingButton = document.querySelectorAll(".setting");
+let dataField = dataInput = document.getElementById("dailies");
+let reasonField = document.getElementById("dailies-description");
 let inputMode = "us";
 let selectedDate = null;
 let selectedDateReformat = null;
@@ -56,11 +59,6 @@ function getCell() {
         return document.querySelector(`td[label="${selectedDateReformat}"]`);
     }
 }
-
-let color = document.getElementById("color");
-color.addEventListener('input', function() {
-    hexCode = this.value;
-});
 
 function getColor(value) {
     if (value === null) return "";
@@ -170,25 +168,6 @@ document.addEventListener('DOMContentLoaded', () => {
     createChart();
 });
 
-function hexToRgba(hex) {
-    hex = hex.replace('#', '');
-
-    const r = parseInt(hex.slice(0, 2), 16);
-    const g = parseInt(hex.slice(2, 4), 16);
-    const b = parseInt(hex.slice(4, 6), 16);
-    let a;
-    const cell = getCell();
-    if (dataInput <= 15) {
-        a = 0.5;
-    } else if (dataInput > 15 && dataInput < 30) {
-        a = 0.8;
-    } else if (dataInput >= 30) {
-        a = 1;
-    }
-    console.log(`rgba(${r},${g},${b},${a})`);
-    cell.style.backgroundColor = `rgba(${r},${g},${b},${a})`;
-}
-
 // chart.js demo
 Chart.defaults.font.family = "Itim";
 Chart.defaults.font.size = 16;
@@ -242,6 +221,8 @@ function createChart() {
     });
 }
 
+// end chart.js demo
+
 tutorialButton.addEventListener("click", function() {
     introVisible = false;
     localStorage.setItem('introStatus', introVisible);
@@ -282,9 +263,13 @@ contributeTab.addEventListener("click", function() {
 
 let habitLogEntries = JSON.parse(localStorage.getItem('habitLogEntries')) || [];
 let logHabitLineItem = document.querySelector(".line-item")
+
 let motivate = document.querySelector(".motivation");
 
+let logEntry;
+let list = document.getElementById("list");
 function habitLogData() {
+    let li = document.createElement("li");
     let logDate;
     if (inputMode === "eu" && selectedDate == null) {
         logDate = `${String(now.getDate()).padStart(2, '0')}/${String(now.getMonth() + 1).padStart(2, '0')}/${String(now.getFullYear())}`;
@@ -297,17 +282,25 @@ function habitLogData() {
         logDate = `${String(selectedDate.getMonth() + 1).padStart(2, '0')}/${String(selectedDate.getDate()).padStart(2, '0')}/${String(selectedDate.getFullYear())}`;
     }
 
-    const logEntry = {
-        date: logDate,
-        reason: reasonInput,
-        duration: dataInput
-    };
+    // let logEntry = {
+    //     date: logDate,
+    //     reason: reasonInput,
+    //     duration: dataInput
+    // };
 
-    habitLogEntries.push(logEntry);
-    localStorage.setItem('habitLogEntries', JSON.stringify(habitLogEntries));
-
-    logHabitLineItem.innerHTML += `<p>${logDate}- ${reasonInput} for ${dataInput} minute(s)`;
-
+    // habitLogEntries.push(logEntry);
+    // localStorage.setItem('habitLogEntries', JSON.stringify(habitLogEntries));
+    
+    li.setAttribute('id', document.getElementById("dailies-description").value);
+    let newLine = document.createElement("p");
+    let removeButton = document.createElement("button");
+    removeButton.setAttribute("id", "delete");
+    removeButton.setAttribute("class", document.getElementById("dailies-description").value);
+    removeButton.textContent = "x";
+    newLine.textContent = `${logDate}- ${reasonInput} for ${dataInput} minute(s)`;
+    li.append(newLine, removeButton);
+    list.appendChild(li);
+    removeButton.addEventListener('click', processDeletion);
     if (dataInput < 50) {
         motivate.innerText = "Keep it up! 💪";
     } else if (dataInput > 49 && dataInput < 150) {
@@ -319,16 +312,32 @@ function habitLogData() {
     }
 }
 
-function loadHabitLogEntries() {
-    const savedEntries = JSON.parse(localStorage.getItem('habitLogEntries')) || [];
-    savedEntries.forEach(entry => {
-        logHabitLineItem.innerHTML += `<p>${entry.date}- ${entry.reason} for ${entry.duration} minute(s)`;
-    });
+
+function unlog() {
+    let latestEntry = list.lastElementChild;
+    list.removeChild(latestEntry);
+    console.log("removed item");
+    // habitLogEntries.pop(logEntry);
+    // localStorage.setItem('habitLogEntries', JSON.stringify(habitLogEntries));
+    
+    // console.log(habitLogEntries)
 }
 
-document.addEventListener('DOMContentLoaded', loadHabitLogEntries);
 
-// stretch goals: gradient functionality and saved to localstorage
+function processDeletion() {
+    unlog();
+}
+
+// function loadHabitLogEntries() {
+//     const savedEntries = JSON.parse(localStorage.getItem('habitLogEntries')) || [];
+//     savedEntries.forEach(entry => {
+//         logHabitLineItem.innerHTML += `<p>${entry.date}- ${entry.reason} for ${entry.duration} minute(s)`;
+//     });
+// }
+
+// document.addEventListener('DOMContentLoaded', loadHabitLogEntries);
+
+// stretch goals: habit log saved to localstorage
 
 let calendarButtonClicks = 0;
 let calendarEdit = document.querySelector(".calendar-tt-text");
@@ -342,4 +351,62 @@ function modifyCalendarDate() {
         calendarButtonClicks = 0;
         calendarEdit.style.visibility = "hidden";
     }
+}
+
+
+
+function colorThemes(colorInput) {
+    let tdCells = document.querySelectorAll("td");
+    let logo = document.getElementById("logo").querySelectorAll("path");
+    if (colorInput === "dark"){
+     document.body.style.backgroundColor = "#000315";
+     document.body.style.color = "#ffd694";
+     lineTab.style.color = "#ffd694";
+     lineTab.style.borderColor = "#ffd694";
+     contributeTab.style.color = "#ffd694";
+     contributeTab.style.borderColor = "#ffd694";
+     logTab.style.color = "#ffd694";
+     logTab.style.borderColor = "#ffd694";
+     tdCells.forEach(function(tdCells) {
+     tdCells.style.backgroundColor = "#10102f";
+     tdCells.style.borderColor = "#0062ff";
+     });
+     dataField.style.color = "white";
+     reasonField.style.color = "white";
+     logo.forEach(logo => {
+        if (logo.id !== "brain") {
+            logo.setAttribute('fill', "#ffd694");
+        }
+    });
+    }
+     else if (colorInput === "nyx"){
+        document.body.style.backgroundImage = "url('stars.png')";
+        document.body.style.backgroundRepeat = "repeat";
+        document.body.style.backgroundSize = "100%";
+        document.body.style.color = "#EDE0FE";
+        lineTab.style.color = "#EDE0FE";
+        lineTab.style.borderColor = "#EDE0FE";
+        contributeTab.style.color = "#EDE0FE";
+        contributeTab.style.borderColor = "#EDE0FE";
+        logTab.style.color = "#EDE0FE";
+        logTab.style.borderColor = "#EDE0FE";
+        tdCells.forEach(function(tdCells) {
+        tdCells.style.backgroundColor = "#10102f";
+        tdCells.style.borderColor = "#6A5CC2";
+        });
+        dataField.style.color = "white";
+        dataField.style.borderColor = "#EDE0FE";
+        reasonField.style.color = "white";
+        reasonField.style.borderColor = "#EDE0FE";
+        settingButton.forEach(settingButton => {
+            settingButton.style.backgroundColor = "#6A5CC2";
+        }
+        )
+        
+        logo.forEach(logo => {
+           if (logo.id !== "brain") {
+               logo.setAttribute('fill', "#EDE0FE");
+           }
+       });
+}
 }
