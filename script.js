@@ -172,6 +172,17 @@ function updateColors() {
 
 function loadFromLocalStorage() {
     const storedValues = localStorage.getItem('savedValues');
+    const savedTheme = localStorage.getItem('theme');
+    if ( savedTheme === "nyx" )
+    {
+        colorThemes("nyx")
+    } else if ( savedTheme === "light" )
+        {
+            colorThemes("light")
+        } else if ( savedTheme === "dark" )
+            {
+                colorThemes("dark")
+            }
     if (storedValues) {
         Object.assign(savedValues, JSON.parse(storedValues));
         updateUIFromSavedValues();
@@ -279,12 +290,8 @@ contributeTab.addEventListener("click", function() {
     habitLog.style.display = "none";
 });
 
-let habitLogEntries = JSON.parse(localStorage.getItem('habitLogEntries')) || [];
-let logHabitLineItem = document.querySelector(".line-item")
-
 let motivate = document.querySelector(".motivation");
 
-let logEntry;
 let list = document.getElementById("list");
 function habitLogData() {
     let li = document.createElement("li");
@@ -300,14 +307,6 @@ function habitLogData() {
         logDate = `${String(selectedDate.getMonth() + 1).padStart(2, '0')}/${String(selectedDate.getDate()).padStart(2, '0')}/${String(selectedDate.getFullYear())}`;
     }
 
-    // let logEntry = {
-    //     date: logDate,
-    //     reason: reasonInput,
-    //     duration: dataInput
-    // };
-
-    // habitLogEntries.push(logEntry);
-    // localStorage.setItem('habitLogEntries', JSON.stringify(habitLogEntries));
     li.setAttribute('id', document.getElementById("dailies-description").value);
     let newLine = document.createElement("p");
     let removeButton = document.createElement("button");
@@ -318,6 +317,7 @@ function habitLogData() {
     newLine.style.marginTop = "-30px";
     li.append(removeButton, newLine);
     list.appendChild(li);
+    localStorage.setItem = (latestHabitEntry, list.lastChild);
     removeButton.addEventListener('click', processDeletion);
     if (dataInput < 50) {
         motivate.innerText = "Keep it up! 💪";
@@ -336,25 +336,12 @@ function unlog() {
     let latestEntry = list.lastElementChild;
     list.removeChild(latestEntry);
     console.log("removed item");
-    // habitLogEntries.pop(logEntry);
-    // localStorage.setItem('habitLogEntries', JSON.stringify(habitLogEntries));
-    
-    // console.log(habitLogEntries)
 }
 
 
 function processDeletion() {
     unlog();
 }
-
-// function loadHabitLogEntries() {
-//     const savedEntries = JSON.parse(localStorage.getItem('habitLogEntries')) || [];
-//     savedEntries.forEach(entry => {
-//         logHabitLineItem.innerHTML += `<p>${entry.date}- ${entry.reason} for ${entry.duration} minute(s)`;
-//     });
-// }
-
-// document.addEventListener('DOMContentLoaded', loadHabitLogEntries);
 
 // stretch goals: habit log saved to localstorage
 
@@ -380,6 +367,7 @@ let colorsMenu = document.getElementById("colorThemes");
 colorsMenu.addEventListener('change', function() {
     
     themeChoice = colorsMenu.value;
+    localStorage.setItem('theme', themeChoice);
     colorThemes(themeChoice);
     console.log(themeChoice)
 });
