@@ -38,16 +38,18 @@ document.getElementById('adjustdate').addEventListener('change', function() {
 
 document.getElementById("dailies").addEventListener('input', function() {
     dataInput = this.value;
-    valueIndex();
-    habitTracker();
 });
+
 
 document.getElementById("dailies-description").addEventListener('input', function() {
     reasonInput = this.value;
-    valueIndex();
-    habitTracker();
 });
 
+function logHabit() {
+    valueIndex();
+    habitTracker();
+    habitLogData();
+}
 const now = new Date();
 const formattedDate = `${String(now.getDate()).padStart(2, '0')}${String(now.getMonth() + 1).padStart(2, '0')}`;
 
