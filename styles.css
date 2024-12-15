@@ -156,6 +156,8 @@ tr {
     margin: auto;
     max-width: 569px;
     max-height: 450px;
+    padding: 25px;
+    border-radius: 25px;
     z-index: -1;
   }
 
@@ -168,12 +170,13 @@ tr {
     display: none;
     height: 190px;
     margin: 0;
-    padding: 5px;
+    padding: 25px;
+    border-radius: 25px;
   }
 
   #scroll {
     margin-top: -20px;
-    height: 190px;
+    height: 180px;
     overflow-y: scroll;
     overflow-x: hidden;
   }
@@ -207,6 +210,22 @@ tr {
 
   input {
     color:#00296b59;
+  }
+
+  select {
+    color: inherit;
+    border-radius: 25px;
+    border-color: inherit;
+    padding: 5px 10px;
+    font-family: inherit;
+  }
+
+  select:hover {
+    cursor: pointer;
+  }
+
+  select option {
+    background-color: #EFEFD0;
   }
 
   #dailies, #dailies-description {
@@ -253,6 +272,7 @@ tr {
   }
 
   .calendar-tooltip {
+    z-index: 9;
     position: relative;
     display: inline-block;
   }
@@ -291,14 +311,17 @@ tr {
     width: 25px;
     height: 25px;
     border: none;
+    margin-left: 400px;
+    margin-bottom: 10px;
     display: inline-block;
-    color: #0062ff;
+    color: inherit;
     background-color: transparent;
     font-weight: 700;
+    text-decoration: wavy underline;
   }
 
   #delete:hover {
     cursor: pointer;
-    color: #00206f;
+    color: #00c8ff;
 
   }

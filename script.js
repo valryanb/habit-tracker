@@ -88,11 +88,17 @@ displayText = document.getElementById("display");
 function eu() {
     inputMode = "eu";
     displayText.innerText = "Display set to European Format (DD/MM)";
+    setTimeout(clearDisplayMessage, 5000);
 }
 
 function us() {
     inputMode = "us";
     displayText.innerText = "Display set to USA Format (MM/DD)";
+    setTimeout(clearDisplayMessage, 5000);
+}
+
+function clearDisplayMessage() {
+    displayText.innerText = "";
 }
 
 function valueIndex() {
@@ -144,10 +150,22 @@ function updateColors() {
     tableDays.forEach(day => {
         const dateLabel = day.getAttribute("label");
         const value = savedValues[dateLabel];
-
-        const color = getColor(value);
-        if (day.style.backgroundColor !== color) {
-            day.style.backgroundColor = color;
+ if (value !== null) {
+            const color = getColor(value);
+            if (day.style.backgroundColor !== color) {
+                day.style.backgroundColor = color;
+            }
+        } else {
+            if (themeChoice === "light" ){
+            day.style.backgroundColor = "#EFEFD0";
+            day.style.borderColor = "#003F88";
+        } else if (themeChoice === "dark" ){
+            day.style.backgroundColor = "#10102f";
+            day.style.borderColor = "#0062ff";
+        } else if (themeChoice === "nyx" ){
+            day.style.backgroundColor = "#10102f";
+            day.style.borderColor = "#6A5CC2";
+        }
         }
     });
 }
@@ -290,7 +308,6 @@ function habitLogData() {
 
     // habitLogEntries.push(logEntry);
     // localStorage.setItem('habitLogEntries', JSON.stringify(habitLogEntries));
-    
     li.setAttribute('id', document.getElementById("dailies-description").value);
     let newLine = document.createElement("p");
     let removeButton = document.createElement("button");
@@ -298,7 +315,8 @@ function habitLogData() {
     removeButton.setAttribute("class", document.getElementById("dailies-description").value);
     removeButton.textContent = "x";
     newLine.textContent = `${logDate}- ${reasonInput} for ${dataInput} minute(s)`;
-    li.append(newLine, removeButton);
+    newLine.style.marginTop = "-30px";
+    li.append(removeButton, newLine);
     list.appendChild(li);
     removeButton.addEventListener('click', processDeletion);
     if (dataInput < 50) {
@@ -311,6 +329,7 @@ function habitLogData() {
         motivate.innerText = "You're AMAZING! ️‍🔥💯";
     }
 }
+
 
 
 function unlog() {
@@ -353,12 +372,44 @@ function modifyCalendarDate() {
     }
 }
 
+let themeChoice;
 
+document.addEventListener('DOMContentLoaded', function() { 
+let colorsMenu = document.getElementById("colorThemes");
+
+colorsMenu.addEventListener('change', function() {
+    
+    themeChoice = colorsMenu.value;
+    colorThemes(themeChoice);
+    console.log(themeChoice)
+});
+});
 
 function colorThemes(colorInput) {
+    // remove button color needs to change with theme
+    let colorsMenu = document.getElementById("colorThemes");
     let tdCells = document.querySelectorAll("td");
     let logo = document.getElementById("logo").querySelectorAll("path");
+
+    if (colorInput === "light"){
+        logo.forEach(logo => {
+            if (logo.id !== "brain") {
+                logo.setAttribute('fill', "#00286A");
+            }
+        });
+        settingButton.forEach(settingButton => {
+            settingButton.style.backgroundColor = "#003F88";
+        }
+        )
+        tdCells.forEach(function(tdCells) {
+            tdCells.style.backgroundColor = "#EFEFD0";
+            tdCells.style.borderColor = "#003F88";
+            });
+        revertToDefaultStyles();
+    }
+
     if (colorInput === "dark"){
+    document.body.style.backgroundImage = "";
      document.body.style.backgroundColor = "#000315";
      document.body.style.color = "#ffd694";
      lineTab.style.color = "#ffd694";
@@ -377,7 +428,13 @@ function colorThemes(colorInput) {
         if (logo.id !== "brain") {
             logo.setAttribute('fill', "#ffd694");
         }
+        settingButton.forEach(settingButton => {
+            settingButton.style.backgroundColor = "#0062ff";
+        }
+        )
     });
+    habitLog.style.backgroundColor = "#0062ff14";
+    lineGraph.style.backgroundColor = "#0062ff14";
     }
      else if (colorInput === "nyx"){
         document.body.style.backgroundImage = "url('stars.png')";
@@ -408,5 +465,48 @@ function colorThemes(colorInput) {
                logo.setAttribute('fill', "#EDE0FE");
            }
        });
+
+       habitLog.style.backgroundColor = "#6A5CC273";
+       lineGraph.style.backgroundColor = "#6A5CC273";
+       
 }
+colorsMenu.style.color = "#00296B";
+updateColors();
 }
+
+const styleItems = [
+    { element: 'document.body', styles: ['backgroundColor', 'backgroundImage', 'color'] }, 
+    { element: 'logTab', styles: ['color', 'borderColor'] },
+    { element: 'lineTab', styles: ['color', 'borderColor'] },
+    { element: 'contributeTab', styles: ['color', 'borderColor'] },
+    { element: 'lineGraph', styles: ['backgroundColor']},
+    { element: 'habitLog', styles: ['backgroundColor']},
+    { element: 'dataField', styles: ['borderColor', 'color']},
+    { element: 'reasonField', styles: ['borderColor', 'color']},
+  ];
+  
+  const defaultStyles = {};
+  
+  function storeDefaultStyles() {
+    styleItems.forEach(item => {
+        const element = eval(item.element);
+        if (!defaultStyles[item.element]) {
+            defaultStyles[item.element] = {};
+        }
+        item.styles.forEach(style => {
+            defaultStyles[item.element][style] = element.style[style];
+        });
+    });
+  }
+
+  storeDefaultStyles();
+
+  function revertToDefaultStyles() {
+    for (let element in defaultStyles) {
+        const domElement = eval(element);
+        for (let style in defaultStyles[element]) {
+            domElement.style[style] = defaultStyles[element][style];
+        }
+    }
+  }
+  
